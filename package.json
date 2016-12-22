@@ -1,19 +1,20 @@
 {
   "name": "lethal_assassins",
   "version": "1.0.0",
-  "description": "lethal_assassins ================",
+  "description": "lethal_assassins",
   "main": "web/app.php",
   "directories": {
     "test": "tests"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "cache-clear": "sudo -u www-data php bin/console c:cl",
+    "deploy": "git pull origin master && npm run cache-clear",
     "start": "docker start lethal-mysql && php bin/console server:start",
     "end": "php bin/console server:stop && docker stop lethal-mysql"
   },
   "repository": {
-    "type": "git",
-    "url": "git@blue:bluesaberist/lethal_assassins.git"
+    "type": "git"
   },
   "author": "",
   "license": "ISC"
