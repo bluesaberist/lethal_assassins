@@ -1,3 +1,7 @@
+html {
+    position: relative;
+    height: 100%;
+}
 body {
     background-color: #FFFFFF;
     background-image: url('img/bg2.jpg');
@@ -6,6 +10,9 @@ body {
     background-position: top;
     background-repeat: no-repeat;
     background-size: cover;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 div {
 	color: #F4F4F4;
@@ -119,13 +126,42 @@ td.rosterd {
 	padding-right: 20px;
     text-align: right;
 }
-noscroll {
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
-    right: -20px;
-    padding-right: 0px;
-    top: 0px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+
+.component-screenshot {
+    position: relative;
+    max-width: 40rem;
+    margin: 1rem auto;
+    text-align: center;
+}
+
+.component-screenshot img {
+    max-width: 100%;
+}
+
+.component-screenshot .container {
+    display: none;
+}
+
+.component-screenshot input {
+    display: none;
+}
+
+.component-screenshot input:checked + .container {
+    display: block;
+}
+
+.component-screenshot .select-buttons {
+    position: absolute;
+    bottom: 1rem;
+}
+
+.component-screenshot label {
+    background: none;
+    border: none;
+    padding: .25rem .5rem;
+    color: white;
+}
+
+.component-screenshot label:active {
+    color: #2355b0;
 }

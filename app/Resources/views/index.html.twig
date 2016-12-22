@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<!-- Top Logo -->
+<table height="164" width="100%" borderwidth="0" padding="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td vAlign="center" align="center"><img src="img/LethalAssassins.png"></img><br><br><br><br></td>
+  </tr>
+</table>
+
+<!-- Roster List -->
+<div>- Roster -</div>
+<center>
+  <table class="rostertop" style="background: rgba(0,0,0,0.5)">
+    <tr>
+      <th class="rostera">Rank</th>
+      <th class="rosterb">Name</th>
+      <th class="rosterc">Join Date</th>
+      <th class="rosterd">Discord ID</th>
+    </tr>
+    <tr>
+      <th class="roster1" colspan="4"></th>
+    </tr>
+    {% for player in clanMaster %}
+      <tr>
+        <td class="rostera">Clan Master</td>
+        <td class="rosterb">{{player.name}}</td>
+        <td class="rosterc">{{player.joindate}}</td>
+        <td class="rosterd">{{player.discordid}}</td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <th class="roster1" colspan="4"></th>
+    </tr>
+    {% for player in officers %}
+      <tr>
+        <td class="rostera">Recruit</td>
+        <td class="rosterb">{{player.name}}</td>
+        <td class="rosterc">{{player.joindate}}</td>
+        <td class="rosterd">{{player.discordid}}</td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <th class="roster1" colspan="4"></th>
+    </tr>
+    {% for player in fighters %}
+      <tr>
+        <td class="rostera">Recruit</td>
+        <td class="rosterb">{{player.name}}</td>
+        <td class="rosterc">{{player.joindate}}</td>
+        <td class="rosterd">{{player.discordid}}</td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <th class="roster1" colspan="4"></th>
+    </tr>
+    {% for player in recruits %}
+      <tr>
+        <td class="rostera">Recruit</td>
+        <td class="rosterb">{{player.name}}</td>
+        <td class="rosterc">{{player.joindate}}</td>
+      </tr>
+    {% endfor %}
+  </table>
+  <table class="rostercontact" style="background: rgba(0,0,0,0.5)">
+    <tr>
+      <th class="roster">
+        <div class="contact">Contact our Master or one of our Officer's if you are interested in joining forces with Lethal Assassins, or you wish to set up a Clan War.</div>
+      </th>
+    </tr>
+  </table>
+</center>
+<br><br><br>
+
+<!-- Screenshots -->
+<center>
+  <table id="maintable1" style="background: rgba(0,0,0,0.6)">
+    <tr>
+      <td>
+        <div>- Screenshots -</div>
+      </td>
+    </tr>
+  </table>
+</center>
+<br>
+<div class="component-screenshot">
+  {% for screenshot in screenshots %}
+    <input type="radio" name="screenshots" id="screenshot-{{loop.index}}" hidden aria-hidden>
+    <div class="container">
+      <img src="{{screenshot}}"/>
+    </div>
+  {% endfor %}
+  <div class="select-buttons">
+    {% for screenshot in screenshots %}
+      <span>
+        <label for="screenshot-{{loop.index}}">●</label>
+      </span>
+    {% endfor %}
+  </div>
+</div>
+{% endblock body %}
