@@ -1,0 +1,128 @@
+html {
+  position: relative;
+  height: 100%;
+  font-family: verdana;
+  font-size: 1rem; }
+
+body {
+  background-attachment: fixed;
+  background-color: #fff;
+  background-image: url("../img/bg2.jpg");
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden; }
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: sans; }
+
+h1 {
+  font-size: 1.4rem; }
+
+div {
+  text-align: center;
+  color: #f4f4f4;
+  font-size: 140%; }
+  div.contact {
+    text-align: justify;
+    color: #f4f4f4;
+    font-size: 90%; }
+
+.site-header {
+  margin-bottom: 2rem;
+  text-align: center; }
+  .site-header img {
+    max-width: 100%; }
+
+.roster-header {
+  text-align: center; }
+
+.roster {
+  margin: auto;
+  border-top: 3px solid #f4f4f4;
+  border-bottom: 3px solid #f4f4f4;
+  background: rgba(0, 0, 0, 0.5); }
+
+.rostercontact {
+  border-top: 0;
+  border-bottom: 2px solid #f4f4f4;
+  width: 550px; }
+
+.contact-roster {
+  border-bottom: 2px solid #f4f4f4;
+  padding-right: 20px;
+  padding-left: 20px;
+  color: #f4f4f4;
+  font-size: 110%; }
+
+th.rostera, th.rosterb, th.rosterc, th.rosterd {
+  border-bottom: 2px solid #f4f4f4;
+  padding-right: 20px;
+  padding-left: 20px;
+  color: #f4f4f4;
+  font-size: 110%; }
+
+th.rostera {
+  text-align: center; }
+
+th.rosterb {
+  text-align: left; }
+
+th.rosterc {
+  text-align: center; }
+
+th.rosterd {
+  text-align: right; }
+
+th.roster1 {
+  border-bottom: 1px solid #808080;
+  padding-right: 20px;
+  padding-left: 20px;
+  color: #808080;
+  font-size: 110%; }
+
+td.roster, td.rostera, td.rosterb, td.rosterc, td.rosterd {
+  padding-right: 20px;
+  padding-left: 20px;
+  color: #f4f4f4;
+  font-size: 100%; }
+
+td.rostera {
+  text-align: center; }
+
+td.rosterb {
+  text-align: left; }
+
+td.rosterc {
+  text-align: center; }
+
+td.rosterd {
+  text-align: right; }
+
+.screenshots-header {
+  background-color: rgba(0, 0, 0, 0.6); }
+
+.component-screenshot {
+  position: relative;
+  margin: 1rem auto;
+  max-width: 40rem;
+  text-align: center; }
+  .component-screenshot img {
+    max-width: 100%; }
+  .component-screenshot .container {
+    display: none; }
+    .component-screenshot .container .show {
+      display: block; }
+  .component-screenshot .select-buttons {
+    position: absolute;
+    bottom: 1rem;
+    border: 0;
+    background: none;
+    color: #f4f4f4; }
+    .component-screenshot .select-buttons .active {
+      color: #2355b0; }

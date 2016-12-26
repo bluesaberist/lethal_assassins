@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block styles %}
+<link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/base-min.css">
+<link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/pure-min.css" integrity="sha384-CCTZv2q9I9m3UOxRLaJneXrrqKwUNOzZ6NGEUMwHtShDJ+nCoiXJCAgi05KfkLGY" crossorigin="anonymous">
+<style media="screen">
+  .games-list {
+    margin: auto;
+    max-width: 50rem;
+  }
+  .games-list table {
+    min-width: 100%;
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="games-list">
+  <h1>ESL Games</h1>
+  <table class="pure-table pure-table-horizontal">
+    <tr>
+      <th>Type</th>
+      <th>Date</th>
+      <th>Player Count</th>
+      <th>Link to tournament page</th>
+    </tr>
+    {% for game in gamesList %}
+      <tr onclick="window.location = '{{path('esl-roster', {'gameId': game.id})}}';" style="cursor: pointer">
+        <td>{{game.type}}</td>
+        <td>{{game.date}}</td>
+        <td>{{game.playerCount}}</td>
+        <td><a href="{{game.pageLink}}">Tournament Page</a></td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock body %}

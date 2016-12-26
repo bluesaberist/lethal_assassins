@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+{% block styles %}
+<link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/base-min.css">
+<link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/pure-min.css" integrity="sha384-CCTZv2q9I9m3UOxRLaJneXrrqKwUNOzZ6NGEUMwHtShDJ+nCoiXJCAgi05KfkLGY" crossorigin="anonymous">
+<style media="screen">
+  .games-list, .add-user {
+    margin: auto;
+    max-width: 50rem;
+  }
+  .games-list table {
+    min-width: 100%;
+  }
+  .add-user {
+    margin-top: 1rem;
+  }
+  .error-alert, .success-alert {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: .25rem;
+  }
+  .error-alert {
+    background-color: rgb(202, 60, 60);
+    color: white;
+  }
+  .success-alert {
+    background-color: rgb(28, 184, 65);
+    color: white;
+  }
+  .button-error {
+    background: rgb(202, 60, 60); /* this is a maroon */
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="games-list">
+  <h1>ESL Game</h1>
+  <ul>
+    <li>Type: <b>{{game.type}}</b></li>
+    <li>Date: <b>{{game.date}}</b></li>
+    <li><b>{{game.playerCount}}</b> players signed up</li>
+    <li><a href="{{game.pageLink}}">Tournament Page</a></li>
+  </ul>
+  <table class="pure-table pure-table-horizontal">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Commitment</th>
+      <th>Remove</th>
+    </tr>
+    {% for player in players %}
+      <tr>
+        <td>{{player.id}}</td>
+        <td>{{player.name}}</td>
+        <td>{{player.commitment}}</td>
+        <td>
+          <form action="{{path('esl-roster-remove', {"gameId": game.id})}}" method="POST">
+            <input type="hidden" name="playerId" value="{{player.id}}">
+            <input type="hidden" name="csrl-token" value="{{ csrf_token('esl-roster-edit') }}">
+            <button type="submit" class="pure-button button-error">Remove</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+{% if is_granted('ROLE_ADMIN') %}
+  <div class="add-user">
+    <form action="{{path('esl-roster-add', {"gameId": game.id})}}" method="POST" class="pure-form pure-form-stacked">
+      <label for="user-id">Add user ID</label>
+      <input type="text" id="player-id" name="playerId" />
+      <label for="user-commitment">Commitment</label>
+      <input type="text" id="player-commitment" name="playerCommitment" placeholder="'100%, confident, backup'" />
+      <input type="hidden" name="csrl-token" value="{{ csrf_token('esl-roster-edit') }}">
+      <button class="pure-button pure-button-primary" type="submit">Add player</button>
+    </form>
+    {% for flash_message in app.session.flashBag.get('error') %}
+      <div class="error-alert">
+        {{ flash_message }}
+      </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashBag.get('success') %}
+      <div class="success-alert">
+        {{ flash_message }}
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+{% endblock body %}

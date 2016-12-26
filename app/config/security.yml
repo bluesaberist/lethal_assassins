@@ -3,22 +3,29 @@
 security:
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
-    providers:
-        in_memory:
-            memory: ~
+  providers:
+    admin_user:
+      id: security.user_provider
+  encoders:
+    AppBundle\Security\User:
+      algorithm: bcrypt
+      cost: 12
+  firewalls:
+    # disables authentication for assets and the profiler, adapt it according to your needs
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
 
-    firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        main:
-            anonymous: ~
-            # activate different ways to authenticate
-
-            # http_basic: ~
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+    main:
+      anonymous: ~
+      pattern: ^/
+      form_login:
+        login_path: login
+        check_path: /login
+      logout:
+        path:   /logout
+        target: /
+  access_control:
+    - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/esl-roster, roles: ROLE_ADMIN }
+    - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }

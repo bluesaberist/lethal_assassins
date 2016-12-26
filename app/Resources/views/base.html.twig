@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Lethal Assassins{% endblock %}</title>
-        <link href="styles.css" rel="stylesheet">
+        {% block styles %}<link href="{{asset('styles/styles.css')}}" rel="stylesheet">{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
