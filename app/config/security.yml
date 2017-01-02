@@ -27,5 +27,5 @@ security:
         target: /
   access_control:
     - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/esl-roster, roles: ROLE_ADMIN }
+    - { path: ^/change, roles: ROLE_ADMIN }
     - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }

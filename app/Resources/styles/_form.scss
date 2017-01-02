@@ -1,0 +1,21 @@
+
+.error-alert,
+.success-alert {
+  margin-top: 1rem;
+  border-radius: .25rem;
+  padding: 1rem;
+}
+
+.error-alert {
+  background-color: rgb(202, 60, 60);
+  color: white;
+}
+
+.success-alert {
+  background-color: rgb(28, 184, 65);
+  color: white;
+}
+
+.button-error {
+  background: rgb(202, 60, 60);
+}

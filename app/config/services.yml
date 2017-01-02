@@ -10,4 +10,15 @@ services:
   security.user_provider:
     class: AppBundle\Security\UserProvider
     arguments: ["@database_connection"]
-    
+
+  app.exception_listener:
+    class: AppBundle\Security\CsrfExceptionListener
+    tags:
+      - { name: kernel.event_listener, event: kernel.exception }
+
+  model.esl:
+    class: AppBundle\services\EslModel
+    arguments: ["@database_connection"]
+  model.player:
+    class: AppBundle\services\PlayerModelS
+    arguments: ["@database_connection"]

@@ -1,0 +1,42 @@
+html {
+  position: relative;
+  height: 100%;
+  font-family: verdana;
+  font-size: 1rem; }
+
+body {
+  background-attachment: fixed;
+  background-color: #fff;
+  background-image: url("../img/bg2.jpg");
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden; }
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: sans; }
+
+h1 {
+  font-size: 1.4rem; }
+
+.error-alert,
+.success-alert {
+  margin-top: 1rem;
+  border-radius: .25rem;
+  padding: 1rem; }
+
+.error-alert {
+  background-color: #ca3c3c;
+  color: white; }
+
+.success-alert {
+  background-color: #1cb841;
+  color: white; }
+
+.button-error {
+  background: #ca3c3c; }

@@ -1,20 +1,53 @@
 {% extends 'base.html.twig' %}
 {% block styles %}
+<link rel="stylesheet" href="{{asset('styles/base.css')}}">
 <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/base-min.css">
 <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/pure-min.css" integrity="sha384-CCTZv2q9I9m3UOxRLaJneXrrqKwUNOzZ6NGEUMwHtShDJ+nCoiXJCAgi05KfkLGY" crossorigin="anonymous">
 <style media="screen">
   .games-list {
     margin: auto;
     max-width: 50rem;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, .8);
   }
   .games-list table {
     min-width: 100%;
+  }
+  .add-game {
+    margin-bottom: 1rem;
   }
 </style>
 {% endblock %}
 {% block body %}
 <div class="games-list">
   <h1>ESL Games</h1>
+  {% if is_granted('ROLE_ADMIN') %}
+    <div class="add-game">
+      <form action="{{path('esl-game-add')}}" method="POST" class="pure-form pure-form-stacked">
+        <label for="link">ESL Tournament Link</label>
+        <input type="text" id="link" name="link" required />
+        <label for="type">Type</label>
+        <select class="" id="type" name="type" required>
+          <option>Classic Cup</option>
+          <option>Community Cup</option>
+        </select>
+        <label for="date">Game Date (YYYY-MM-DD)</label>
+        <input type="text" name="date" id="date" required />
+        <input type="hidden" name="csrf-token" value="{{ csrf_token('change-esl') }}">
+        <button class="pure-button pure-button-primary" type="submit">Add game</button>
+      </form>
+      {% for flash_message in app.session.flashBag.get('error') %}
+        <div class="error-alert">
+          {{ flash_message }}
+        </div>
+      {% endfor %}
+      {% for flash_message in app.session.flashBag.get('success') %}
+        <div class="success-alert">
+          {{ flash_message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
   <table class="pure-table pure-table-horizontal">
     <tr>
       <th>Type</th>

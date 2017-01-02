@@ -24,6 +24,23 @@ h4 {
 h1 {
   font-size: 1.4rem; }
 
+.error-alert,
+.success-alert {
+  margin-top: 1rem;
+  border-radius: .25rem;
+  padding: 1rem; }
+
+.error-alert {
+  background-color: #ca3c3c;
+  color: white; }
+
+.success-alert {
+  background-color: #1cb841;
+  color: white; }
+
+.button-error {
+  background: #ca3c3c; }
+
 div {
   text-align: center;
   color: #f4f4f4;

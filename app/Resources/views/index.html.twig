@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
-
+{% block styles %}<link href="{{asset('styles/roster.css')}}" rel="stylesheet">{% endblock %}
 {% block body %}
 <div class="site-header">
-  <img src="img/LethalAssassins.png" alt="Lethal Assassins">
+  <img src="{{asset('img/LethalAssassins.png')}}" alt="Lethal Assassins">
 </div>
 
 <h1 class="roster-header">Roster</h1>
@@ -65,6 +65,7 @@
 </table>
 <div class="contact-roster">Contact our Master or one of our Officer's if you are interested in joining forces with Lethal Assassins, or you wish to set up a Clan War.</div>
 
+{#
 <h1 class="screenshots-header">Screenshots</h1>
 <div class="component-screenshot" id="component-screenshots">
   {% for screenshot in screenshots %}
@@ -83,4 +84,5 @@
 <script type="text/javascript">
   var screenshotBox
 </script>
+#}
 {% endblock body %}

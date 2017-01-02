@@ -13,22 +13,6 @@
   .add-user {
     margin-top: 1rem;
   }
-  .error-alert, .success-alert {
-    margin-top: 1rem;
-    padding: 1rem;
-    border-radius: .25rem;
-  }
-  .error-alert {
-    background-color: rgb(202, 60, 60);
-    color: white;
-  }
-  .success-alert {
-    background-color: rgb(28, 184, 65);
-    color: white;
-  }
-  .button-error {
-    background: rgb(202, 60, 60); /* this is a maroon */
-  }
 </style>
 {% endblock %}
 {% block body %}
@@ -55,7 +39,7 @@
         <td>
           <form action="{{path('esl-roster-remove', {"gameId": game.id})}}" method="POST">
             <input type="hidden" name="playerId" value="{{player.id}}">
-            <input type="hidden" name="csrl-token" value="{{ csrf_token('esl-roster-edit') }}">
+            <input type="hidden" name="csrf-token" value="{{ csrf_token('change-esl') }}">
             <button type="submit" class="pure-button button-error">Remove</button>
           </form>
         </td>
@@ -70,7 +54,7 @@
       <input type="text" id="player-id" name="playerId" />
       <label for="user-commitment">Commitment</label>
       <input type="text" id="player-commitment" name="playerCommitment" placeholder="'100%, confident, backup'" />
-      <input type="hidden" name="csrl-token" value="{{ csrf_token('esl-roster-edit') }}">
+      <input type="hidden" name="csrf-token" value="{{ csrf_token('change-esl') }}">
       <button class="pure-button pure-button-primary" type="submit">Add player</button>
     </form>
     {% for flash_message in app.session.flashBag.get('error') %}

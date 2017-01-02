@@ -1,33 +1,4 @@
-html {
-  position: relative;
-  height: 100%;
-  font-family: verdana;
-  font-size: 1rem;
-}
-
-body {
-  background-attachment: fixed;
-  background-color: #fff;
-  background-image: url('../img/bg2.jpg');
-  //min-height: 500px;
-  background-repeat: no-repeat;
-  background-position: top;
-  background-size: cover;
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-h1,
-h2,
-h3,
-h4 {
-  font-family: sans;
-}
-
-h1 {
-  font-size: 1.4rem;
-}
+@import 'base';
 
 div {
   text-align: center;
