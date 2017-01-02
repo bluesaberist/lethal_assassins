@@ -7,6 +7,9 @@ Lethal Assassins
 ### PHP
 You need to install PHP. Install with `sudo apt-get install php-fpm php php-mysql php-xml`. (php-fpm is needed to because php will otherwise install apache server with it. If that's what you want, then go ahead and skip it.)
 
+### Node
+You also need to install Node.js (which comes with NPM). The best way to handle installing Node is to use [NVM](https://github.com/creationix/nvm), by following the instructions in their Readme. (Under Windows you can just install Node from [it's website](https://nodejs.org/en/).)
+
 ### Composer
 Next you need Composer. Install by running the commands at the top of the [Composer Downloads page](https://getcomposer.org/download/). You can just directly copy and paste those lines to the terminal. Once all lines are run, there will be a new file `composer.phar` in your current directory. You can either move that into the project directory (source control will ignore it), or move it to `/usr/local/bin`, rename to `composer`, and change owner to root. (as a single command: `sudo mv composer.phar /usr/local/bin/composer && sudo chown root:root /usr/local/bin/composer`). If put in the project directory, you'll run it with `./composer.phar`, rather than just `composer`.
 
@@ -34,9 +37,12 @@ The `database_host` and `database_port` defaults will probably work fine. For `d
 After inputing the parameters above, Composer will clear the cache and the app is ready to run.
 
 ### Run dev environment!
-`package.json` is already setup to run the environment from there. Just run `npm start` to spin up the docker container and start the built-in PHP dev server. Then when you are finished, run `npm run end` to put both services to rest. The MySQL container will persist on your system, and the above line will have it store data in `/var/data`.
+`package.json` is already setup to run the environment from there. Just run `npm start` to spin up the docker container, start the built-in PHP dev server, and start the node-sass watch service (which will detect when sass files are changed and re-build them on save). Then when you are finished, run `npm run end` to put both services to rest. The MySQL container will persist on your system, and the above line will have it store data in `/var/data`.
 
 After running `npm start`, you can visit `localhost:8000` to see the app.
+
+### Building stylesheets
+To build sass stylesheets separately, you can run `npm run build` for one-off, or `npm run dev` to start the watch process (same process stared by `npm start`).
 
 ## Production server
 On a production server (not using the built-in PHP server), the cache clear will likely fail due to a user problem. To clear the cache when the server user is not you, use `sudo -u <web server user> php bin/console c:cl`, where "<web server user>" is probably `www-data`, `apache`, or `nginx`. package.json has a shortcut for clearing cache with www-data which can be run with `npm run cache-clear`.
