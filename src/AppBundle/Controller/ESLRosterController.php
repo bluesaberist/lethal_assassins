@@ -23,64 +23,22 @@ class ESLRosterController extends Controller
 
     if(is_numeric($gameId)) {
 
-      $gameQuery = <<<EOT
-SELECT
-    `EslGame`.`id`,
-    `EslGame`.`type`,
-    `EslGame`.`date`,
-    `EslGame`.`pageLink`,
-    COUNT(`player`.`id`) AS 'playerCount'
-FROM `EslGame`
-  JOIN `EslGamePlayers` ON `EslGame`.`id` = `EslGamePlayers`.`EslGameId`
-  JOIN `player` ON `EslGamePlayers`.`playerId` = `player`.`id`
-GROUP BY `EslGame`.`id`
-EOT;
-      $playersQuery = <<<EOT
-SELECT
-  `player`.`id`,
-  `player`.`rank`,
-  `player`.`name`,
-  `player`.`discordid`,
-  `EslGamePlayers`.`commitment`
-FROM `EslGame`
-  JOIN `EslGamePlayers` ON `EslGame`.`id` = `EslGamePlayers`.`EslGameId`
-  JOIN `player` ON `EslGamePlayers`.`playerId` = `player`.`id`
-WHERE `EslGame`.`id` = :id
-ORDER BY `player`.`rank` ASC, `player`.`name`
-EOT;
-
-      $gameResult = $dbh->executeQuery($gameQuery, ["id" => $gameId])->fetchAll(\PDO::FETCH_ASSOC);
+      $gameResult = $this->get("model.esl")->getGame($gameId);
 
       if(count($gameResult) !== 1) {
         throw new NotFoundHttpException();
       }
-
       $game = $gameResult[0];
-
-      $players = $dbh->executeQuery($playersQuery, ["id" => $gameId])->fetchAll(\PDO::FETCH_ASSOC);
-
+      $players = $this->get("model.player")->getPlayersInGame($gameId);
+      $nonPlayers = $this->get("model.player")->getPlayersNotInGame($gameId);
       return $this->render('esl/game.html.twig', [
         "game" => $game,
         "players" => $players,
+        "nonPlayers" => $nonPlayers,
       ]);
     }
 
-    $listGamesQuery = <<<EOT
-SELECT
-    `EslGame`.`id`,
-    `EslGame`.`type`,
-    `EslGame`.`date`,
-    `EslGame`.`pageLink`,
-    COUNT(`player`.`id`) AS 'playerCount'
-FROM
-    `EslGame`
-        LEFT JOIN
-    `EslGamePlayers` ON `EslGame`.`id` = `EslGamePlayers`.`EslGameId`
-        LEFT JOIN
-    `player` ON `EslGamePlayers`.`playerId` = `player`.`id`
-GROUP BY `EslGame`.`id`
-EOT;
-    $gamesList = $dbh->query($listGamesQuery);
+    $gamesList = $this->get("model.esl")->getGames();
 
     return $this->render('esl/games-list.html.twig', [
       "gamesList" => $gamesList,

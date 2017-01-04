@@ -20,5 +20,5 @@ services:
     class: AppBundle\services\EslModel
     arguments: ["@database_connection"]
   model.player:
-    class: AppBundle\services\PlayerModelS
+    class: AppBundle\services\PlayerModel
     arguments: ["@database_connection"]

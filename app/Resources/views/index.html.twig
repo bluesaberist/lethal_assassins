@@ -8,7 +8,6 @@
 <h1 class="roster-header">Roster</h1>
 <table class="roster" style="">
   <tr>
-    {% if is_granted('ROLE_ADMIN') %}<th class="rostera">ID</th>{% endif %}
     <th class="rostera">Rank</th>
     <th class="rosterb">Name</th>
     <th class="rosterc">Join Date</th>
@@ -19,7 +18,6 @@
   </tr>
   {% for player in clanMaster %}
     <tr>
-      {% if is_granted('ROLE_ADMIN') %}<td class="rostera">{{player.id}}</td>{% endif %}
       <td class="rostera">Clan Master</td>
       <td class="rosterb">{{player.name}}</td>
       <td class="rosterc">{{player.joindate}}</td>
@@ -31,7 +29,6 @@
   </tr>
   {% for player in officers %}
     <tr>
-      {% if is_granted('ROLE_ADMIN') %}<td class="rostera">{{player.id}}</td>{% endif %}
       <td class="rostera">Officer</td>
       <td class="rosterb">{{player.name}}</td>
       <td class="rosterc">{{player.joindate}}</td>
@@ -43,7 +40,6 @@
   </tr>
   {% for player in fighters %}
     <tr>
-      {% if is_granted('ROLE_ADMIN') %}<td class="rostera">{{player.id}}</td>{% endif %}
       <td class="rostera">Fighter</td>
       <td class="rosterb">{{player.name}}</td>
       <td class="rosterc">{{player.joindate}}</td>
@@ -55,7 +51,6 @@
   </tr>
   {% for player in recruits %}
     <tr>
-      {% if is_granted('ROLE_ADMIN') %}<td class="rostera">{{player.id}}</td>{% endif %}
       <td class="rostera">Recruit</td>
       <td class="rosterb">{{player.name}}</td>
       <td class="rosterc">{{player.joindate}}</td>

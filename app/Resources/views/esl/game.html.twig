@@ -2,10 +2,13 @@
 {% block styles %}
 <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/base-min.css">
 <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/pure-min.css" integrity="sha384-CCTZv2q9I9m3UOxRLaJneXrrqKwUNOzZ6NGEUMwHtShDJ+nCoiXJCAgi05KfkLGY" crossorigin="anonymous">
+<link rel="stylesheet" href="{{asset('styles/base.css')}}">
 <style media="screen">
   .games-list, .add-user {
     margin: auto;
     max-width: 50rem;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, .8);
   }
   .games-list table {
     min-width: 100%;
@@ -50,8 +53,12 @@
 {% if is_granted('ROLE_ADMIN') %}
   <div class="add-user">
     <form action="{{path('esl-roster-add', {"gameId": game.id})}}" method="POST" class="pure-form pure-form-stacked">
-      <label for="user-id">Add user ID</label>
-      <input type="text" id="player-id" name="playerId" />
+      <label for="user-id">Add player</label>
+      <select id="player-id" name="playerId">
+        {% for player in nonPlayers %}
+          <option value="{{player.id}}">{{player.name}}</option>
+        {% endfor %}
+      </select>
       <label for="user-commitment">Commitment</label>
       <input type="text" id="player-commitment" name="playerCommitment" placeholder="'100%, confident, backup'" />
       <input type="hidden" name="csrf-token" value="{{ csrf_token('change-esl') }}">

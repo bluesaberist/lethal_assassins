@@ -16,6 +16,77 @@ class PlayerModel
     $this->dbh = $dbh;
   }
 
+  public function getPlayers()
+  {
+    $selectQuery = <<<EOT
+SELECT `id`, `name`, `rank`, `joindate`, `discordId`
+  FROM `lethal_assassins`.`player`
+  WHERE `active` = 1
+  ORDER BY `rank` ASC, `joindate` ASC
+EOT;
+    try {
+      $players = $this->dbh->query($selectQuery);
+      return $players;
+    }
+    catch (\Exception $e) {
+      dump($e);
+      return null;
+    }
+  }
+
+  public function getPlayersNotInGame($gameId)
+  {
+    $selectQuery = <<<EOT
+SELECT
+    player.`id`, player.`name`, player.`rank`, player.`joindate`, player.`discordId`
+FROM
+    `lethal_assassins`.`player` AS player
+        LEFT JOIN
+    `lethal_assassins`.`EslGamePlayers` AS gamePlayer ON player.id = gamePlayer.playerId
+        AND gamePlayer.EslGameId = :eslGameId
+WHERE
+    player.`active` = 1
+        AND gamePlayer.EslGameId IS null
+ORDER BY player.`rank` ASC , player.`name` ASC
+EOT;
+    try {
+      $players = $this->dbh->executeQuery($selectQuery, ["eslGameId" => $gameId])->fetchAll(\PDO::FETCH_ASSOC);
+      return $players;
+    }
+    catch (\Exception $e) {
+      dump($e);
+      return null;
+    }
+  }
+
+  public function getPlayersInGame($gameId)
+  {
+    $selectQuery = <<<EOT
+SELECT
+    player.`id`,
+    player.`name`,
+    player.`rank`,
+    player.`joindate`,
+    player.`discordId`,
+    gamePlayer.`commitment`
+FROM
+    `lethal_assassins`.`player` AS player
+        JOIN
+    `lethal_assassins`.`EslGamePlayers` AS gamePlayer ON player.id = gamePlayer.playerId
+        AND gamePlayer.EslGameId = :eslGameId
+WHERE
+    player.`active` = 1
+ORDER BY player.`rank` ASC , player.`joindate` ASC
+EOT;
+    try {
+      return $this->dbh->executeQuery($selectQuery, ["eslGameId" => $gameId])->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    catch (\Exception $e) {
+      dump($e);
+      return null;
+    }
+  }
+
   public function insertPlayer($name, $rank, $joinDate, $active = 1, $discordId = null, $email = null, $password = null)
   {
     $insertQuery = <<<EOT
