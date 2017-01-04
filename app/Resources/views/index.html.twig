@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block styles %}<link href="{{asset('styles/roster.css')}}" rel="stylesheet">{% endblock %}
+{% block styles %}<link href="{{asset('styles/roster.css')}}?v={{cacheBust}}" rel="stylesheet">{% endblock %}
 {% block body %}
 <div class="site-header">
   <img src="{{asset('img/LethalAssassins.png')}}" alt="Lethal Assassins">

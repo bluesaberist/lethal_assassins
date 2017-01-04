@@ -43,6 +43,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+      cacheBust: "0"
 
 # Doctrine Configuration
 doctrine:

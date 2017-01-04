@@ -2,7 +2,7 @@
 {% block styles %}
 <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/base-min.css">
 <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/pure-min.css" integrity="sha384-CCTZv2q9I9m3UOxRLaJneXrrqKwUNOzZ6NGEUMwHtShDJ+nCoiXJCAgi05KfkLGY" crossorigin="anonymous">
-<link rel="stylesheet" href="{{asset('styles/base.css')}}">
+<link rel="stylesheet" href="{{asset('styles/base.css')}}?v={{cacheBust}}">
 <style media="screen">
   .games-list {
     margin: auto;
