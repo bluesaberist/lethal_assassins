@@ -21,7 +21,7 @@
 {% endblock %}
 {% block body %}
 <div class="admin-panel">
-  <h1>Player</h1>
+  <h1><a href="{{path('admin-show-players')}}">Player List</a> / {{player.name}}</h1>
   <form method="POST" action="{{path('admin-edit-player', {'id': player.id})}}">
     <ul class="player-info">{# TODO Make rank a dropdown #}
       <li>

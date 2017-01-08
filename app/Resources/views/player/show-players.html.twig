@@ -16,6 +16,22 @@
   tr:nth-child(2n) td {
     background-color: rgba(0, 0, 0, 0.125);
   }
+  tr td.rank-1, tr td.rank-2 {
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .rank-1 {
+    color: rgb(52, 152, 219);
+  }
+  .rank-2 {
+    color: rgb(241, 196, 15);
+  }
+  .rank-3 {
+    color: rgb(153, 45, 34);
+  }
+  .rank-13 {
+    color: rgb(70, 70, 70);
+  }
 </style>
 {% endblock %}
 {% block body %}
@@ -31,7 +47,7 @@
     {% for player in players %}
       <tr>
         <td>{{player.name}}</td>
-        <td>{{player.rankName}}</td>
+        <td class="rank-{{player.rank}}">{{player.rankName}}</td>
         <td>{{player.joindate}}</td>
         <td><a href="{{path('admin-show-player', {'id': player.id})}}" class="">Open {{player.name}}</a></td>
       </tr>
