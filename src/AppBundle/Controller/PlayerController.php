@@ -24,7 +24,6 @@ class PlayerController extends Controller
       $player["rankName"] = RankUtils::rankToText($player["rank"]);
     }
     $inactivePlayers = [];
-    dump($players);
     return $this->render('player/show-players.html.twig', [
       "players" => $players,
       "inactivePlayers" => $inactivePlayers,
