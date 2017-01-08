@@ -4,12 +4,6 @@
 <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/pure-min.css" integrity="sha384-CCTZv2q9I9m3UOxRLaJneXrrqKwUNOzZ6NGEUMwHtShDJ+nCoiXJCAgi05KfkLGY" crossorigin="anonymous">
 <link rel="stylesheet" href="{{asset('styles/base.css')}}?v={{cacheBust}}">
 <style media="screen">
-  .games-list, .add-user {
-    margin: auto;
-    max-width: 50rem;
-    padding: 1rem;
-    background-color: rgba(255, 255, 255, .8);
-  }
   .games-list table {
     min-width: 100%;
   }
@@ -19,8 +13,9 @@
 </style>
 {% endblock %}
 {% block body %}
-<div class="games-list">
-  <h1>ESL Game</h1>
+<div class="games-list admin-panel">
+
+  <h1><a href="{{path('esl-roster')}}">ESL Games</a> / {{game.date}}</h1>
   <ul>
     <li>Type: <b>{{game.type}}</b></li>
     <li>Date: <b>{{game.date}}</b></li>
@@ -51,7 +46,7 @@
   </table>
 </div>
 {% if is_granted('ROLE_ADMIN') %}
-  <div class="add-user">
+  <div class="add-user admin-panel">
     <form action="{{path('esl-roster-add', {"gameId": game.id})}}" method="POST" class="pure-form pure-form-stacked">
       <label for="user-id">Add player</label>
       <select id="player-id" name="playerId">

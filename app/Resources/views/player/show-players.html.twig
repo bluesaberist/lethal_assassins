@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block styles %}
+<link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/base-min.css">
+<link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/pure-min.css" integrity="sha384-CCTZv2q9I9m3UOxRLaJneXrrqKwUNOzZ6NGEUMwHtShDJ+nCoiXJCAgi05KfkLGY" crossorigin="anonymous">
+<link rel="stylesheet" href="{{asset('styles/base.css')}}?v={{cacheBust}}">
+<style media="screen">
+  .player-table {
+    width: 100%;
+  }
+  th, td {
+    padding: .5rem;
+  }
+  tr {
+    border-bottom: solid 1px black;
+  }
+  tr:nth-child(2n) td {
+    background-color: rgba(0, 0, 0, 0.125);
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="admin-panel">
+  <h1>Active Players</h1>
+  <table class="player-table">
+    <tr>
+      <th>Name</th>
+      <th>Rank</th>
+      <th>Joined</th>
+      <th>Actions</th>
+    </tr>
+    {% for player in players %}
+      <tr>
+        <td>{{player.name}}</td>
+        <td>{{player.rankName}}</td>
+        <td>{{player.joindate}}</td>
+        <td><a href="{{path('admin-show-player', {'id': player.id})}}" class="">Open {{player.name}}</a></td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock body %}

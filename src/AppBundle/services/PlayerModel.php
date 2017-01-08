@@ -16,6 +16,26 @@ class PlayerModel
     $this->dbh = $dbh;
   }
 
+  public function getPlayer($id)
+  {
+    $selectQuery = <<<EOT
+SELECT `id`, `name`, `rank`, `joindate`, `discordId`, `email`, `active`
+  FROM `lethal_assassins`.`player`
+  WHERE `id` = :id
+EOT;
+    try {
+      $playerResult = $this->dbh->executeQuery($selectQuery, ["id" => $id])->fetchAll(\PDO::FETCH_ASSOC);
+      if(count($playerResult) === 1) {
+        return $playerResult[0];
+      }
+      return false;
+    }
+    catch (\Exception $e) {
+      dump($e);
+      return null;
+    }
+  }
+
   public function getPlayers()
   {
     $selectQuery = <<<EOT
@@ -25,7 +45,25 @@ SELECT `id`, `name`, `rank`, `joindate`, `discordId`
   ORDER BY `rank` ASC, `joindate` ASC
 EOT;
     try {
-      $players = $this->dbh->query($selectQuery);
+      $players = $this->dbh->query($selectQuery)->fetchAll();
+      return $players;
+    }
+    catch (\Exception $e) {
+      dump($e);
+      return null;
+    }
+  }
+
+  public function getInactivePlayers()
+  {
+    $selectQuery = <<<EOT
+SELECT `id`, `name`, `rank`, `joindate`, `discordId`
+  FROM `lethal_assassins`.`player`
+  WHERE `active` = 0
+  ORDER BY `rank` ASC, `joindate` ASC
+EOT;
+    try {
+      $players = $this->dbh->query($selectQuery)->fetchAll();
       return $players;
     }
     catch (\Exception $e) {
@@ -122,20 +160,26 @@ EOT;
     $availableFields = ["name", "rank", "joindate", "discordId", "active", "email", "password"];
     $editQuery = "UPDATE `lethal_assassins`.`player` SET ";
     $queryFieldItems = [];
-    $paremeters = [];
+    $parameters = [
+      "id" => $id,
+    ];
     foreach ($availableFields as $fieldName) {
       if(isset($fields[$fieldName])) {
         if($fieldName === "joindate") {
-          $date = \DateTime::createFromFormat('Y-m-d', $request->request->get("date"));
+          $date = \DateTime::createFromFormat('Y-m-d', $fields[$fieldName])->format('Y-m-d');
           if($date === false) {
             continue;
           }
           $queryFieldItems[] = "`$fieldName` = :$fieldName";
-          $paremeters[$fieldName] = $date;
+          $parameters[$fieldName] = $date;
+        }
+        elseif($fieldName === "active") {
+          $queryFieldItems[] = "`$fieldName` = :$fieldName";
+          $parameters[$fieldName] = $fields[$fieldName] ? 1 : 0;
         }
         else {
           $queryFieldItems[] = "`$fieldName` = :$fieldName";
-          $paremeters[$fieldName] = $fields[$fieldName];
+          $parameters[$fieldName] = $fields[$fieldName];
         }
       }
     }

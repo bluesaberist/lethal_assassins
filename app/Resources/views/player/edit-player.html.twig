@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+{% block styles %}
+<link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/base-min.css">
+<link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/pure-min.css" integrity="sha384-CCTZv2q9I9m3UOxRLaJneXrrqKwUNOzZ6NGEUMwHtShDJ+nCoiXJCAgi05KfkLGY" crossorigin="anonymous">
+<link rel="stylesheet" href="{{asset('styles/base.css')}}?v={{cacheBust}}">
+<style media="screen">
+  .player-info {
+    list-style: none;
+  }
+  .player-info li {
+    line-height: 2rem;
+  }
+  .add-user {
+    margin-top: 1rem;
+  }
+  .field-label {
+    display: inline-block;
+    width: 6rem;
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="admin-panel">
+  <h1>Player</h1>
+  <form method="POST" action="{{path('admin-edit-player', {'id': player.id})}}">
+    <ul class="player-info">{# TODO Make rank a dropdown #}
+      <li>
+        <label>
+          <span class="field-label">Rank:</span>
+          <select name="rank">
+            {% for rankId, rank in ranks %}
+              <option {{rankId == player.rank ? 'selected' : ''}} value="{{rankId}}">{{rank}}</option>
+            {% endfor %}
+          </select>
+        </label>
+      </li>
+      <li><label><span class="field-label">Name:</span>       <input type="text" name="name" value="{{player.name}}" /></label></li>
+      <li><label><span class="field-label">Joined:</span>     <input type="text" name="joindate" pattern="[\d]{4}-[\d]{2}-[\d]{2}" value="{{player.joindate}}" /></label></li>
+      <li><label><span class="field-label">Discord ID:</span> <input type="text" name="discordId" value="{{player.discordId}}" /></label></li>
+      <li><label><span class="field-label">Email:</span>      <input type="text" name="email" type="email" value="{{player.email}}" /></label></li>
+      <li><label><span class="field-label">Active:</span>     <input type="checkbox" name="active" {{player.active ? 'checked' : ''}} /></label></li>
+    </ul>
+    <div>
+      <button class="pure-button pure-button-primary" type="submit">Save Changes</button>
+      <a href="{{path('admin-show-player', {'id': player.id})}}" class="pure-button">Cancel</a>
+    </div>
+    {% for flash_message in app.session.flashBag.get('error') %}
+      <div class="error-alert">
+        {{ flash_message }}
+      </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashBag.get('success') %}
+      <div class="success-alert">
+        {{ flash_message }}
+      </div>
+    {% endfor %}
+  </form>
+</div>
+{% endblock body %}

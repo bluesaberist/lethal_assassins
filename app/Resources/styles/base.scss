@@ -30,3 +30,10 @@ h1 {
 }
 
 @import 'form';
+
+.admin-panel {
+  margin: auto;
+  background-color: rgba(255, 255, 255, .8);
+  padding: 1rem;
+  max-width: 50rem;
+}

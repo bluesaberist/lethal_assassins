@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+{% block styles %}
+<link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/base-min.css">
+<link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/pure-min.css" integrity="sha384-CCTZv2q9I9m3UOxRLaJneXrrqKwUNOzZ6NGEUMwHtShDJ+nCoiXJCAgi05KfkLGY" crossorigin="anonymous">
+<link rel="stylesheet" href="{{asset('styles/base.css')}}?v={{cacheBust}}">
+<style media="screen">
+  .player-info {
+    list-style: none;
+  }
+  .player-info li {
+    line-height: 2rem;
+  }
+  .field-label {
+    display: inline-block;
+    width: 6rem;
+  }
+  .field-value {
+    font-weight: bold;
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="admin-panel">
+  <h1>Player</h1>
+  <ul class="player-info">
+    <li><span class="field-label">Rank:</span>       <span class="field-value">{{player.rank}}</span></li>
+    <li><span class="field-label">Name:</span>       <span class="field-value">{{player.name}}</span></li>
+    <li><span class="field-label">Joined:</span>     <span class="field-value">{{player.joindate}}</span></li>
+    <li><span class="field-label">Discord ID:</span> <span class="field-value">{{player.discordId}}</span></li>
+    <li><span class="field-label">Email:</span>      <span class="field-value">{{player.email}}</span></li>
+  </ul>
+  <div>
+    <a href="{{path('admin-edit-player', {'id': player.id})}}" class="pure-button pure-button-primary">Edit {{player.name}}</a>
+  </div>
+  {% for flash_message in app.session.flashBag.get('error') %}
+    <div class="error-alert">
+      {{ flash_message }}
+    </div>
+  {% endfor %}
+  {% for flash_message in app.session.flashBag.get('success') %}
+    <div class="success-alert">
+      {{ flash_message }}
+    </div>
+  {% endfor %}
+</div>
+{% endblock body %}
