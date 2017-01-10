@@ -37,6 +37,9 @@
 {% block body %}
 <div class="admin-panel">
   <h1>Active Players</h1>
+  <div>
+    <a href="{{path('admin-add-player')}}" class="pure-button pure-button-primary">Add Player</a>
+  </div>
   <table class="player-table">
     <tr>
       <th>Name</th>
@@ -48,6 +51,23 @@
       <tr>
         <td>{{player.name}}</td>
         <td class="rank-{{player.rank}}">{{player.rankName}}</td>
+        <td>{{player.joindate}}</td>
+        <td><a href="{{path('admin-show-player', {'id': player.id})}}" class="">Open {{player.name}}</a></td>
+      </tr>
+    {% endfor %}
+  </table>
+  <h2>Non active players (left, kicked, or MIA)</h2>
+  <table class="player-table">
+    <tr>
+      <th>Name</th>
+      <th>Rank</th>
+      <th>Joined</th>
+      <th>Actions</th>
+    </tr>
+    {% for player in inactivePlayers %}
+      <tr>
+        <td>{{player.name}}</td>
+        <td class="rank-{{player.rank}}">-</td>
         <td>{{player.joindate}}</td>
         <td><a href="{{path('admin-show-player', {'id': player.id})}}" class="">Open {{player.name}}</a></td>
       </tr>

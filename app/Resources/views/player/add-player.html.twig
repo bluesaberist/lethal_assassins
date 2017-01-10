@@ -17,32 +17,30 @@
     display: inline-block;
     width: 6rem;
   }
+  .prefill-data {
+    font-weight: bold;
+  }
 </style>
 {% endblock %}
 {% block body %}
 <div class="admin-panel">
-  <h1><a href="{{path('admin-show-players')}}">Player List</a> / {{player.name}}</h1>
-  <form method="POST" action="{{path('admin-edit-player', {'id': player.id})}}">
+  <h1><a href="{{path('admin-show-players')}}">Player List</a> / New Player</h1>
+  <form method="POST" action="{{path('admin-add-player')}}">
     <ul class="player-info">
       <li>
         <label>
           <span class="field-label">Rank:</span>
-          <select name="rank">
-            {% for rankId, rank in ranks %}
-              <option {{rankId == player.rank ? 'selected' : ''}} value="{{rankId}}">{{rank}}</option>
-            {% endfor %}
-          </select>
+          <span class="prefill-data">{{ranks[13]}}</span>
         </label>
       </li>
-      <li><label><span class="field-label">Name:</span>       <input type="text" name="name" value="{{player.name}}" /></label></li>
-      <li><label><span class="field-label">Joined:</span>     <input type="text" name="joindate" pattern="[\d]{4}-[\d]{2}-[\d]{2}" value="{{player.joindate}}" /></label></li>
+      <li><label><span class="field-label">Name:</span>       <input type="text" required name="name" value="{{player.name}}" /></label></li>
+      <li><label><span class="field-label">Joined:</span>     <input type="text" required name="joindate" pattern="[\d]{4}-[\d]{2}-[\d]{2}" value="{{player.joindate}}" /></label></li>
       <li><label><span class="field-label">Discord ID:</span> <input type="text" name="discordId" value="{{player.discordId}}" /></label></li>
       <li><label><span class="field-label">Email:</span>      <input type="text" name="email" type="email" value="{{player.email}}" /></label></li>
-      <li><label><span class="field-label">Active:</span>     <input type="checkbox" name="active" {{player.active ? 'checked' : ''}} /></label></li>
     </ul>
     <div>
       <button class="pure-button pure-button-primary" type="submit">Save Changes</button>
-      <a href="{{path('admin-show-player', {'id': player.id})}}" class="pure-button">Cancel</a>
+      <a href="{{path('admin-show-players')}}" class="pure-button">Cancel</a>
     </div>
     {% for flash_message in app.session.flashBag.get('error') %}
       <div class="error-alert">

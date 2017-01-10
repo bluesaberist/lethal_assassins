@@ -133,8 +133,7 @@ INSERT INTO `lethal_assassins`.`player`
 VALUES (:name, :rank, :joindate, :discordId, :active, :email, :password);
 EOT;
     try {
-      $this->insertRow($insertQuery, [
-        "id" => $id,
+      $id = $this->insertRow($insertQuery, [
         "name" => $name,
         "rank" => $rank,
         "joindate" => $joinDate,
@@ -143,7 +142,7 @@ EOT;
         "email" => $email,
         "password" => $password,
       ]);
-      return true;
+      return $id;
     }
     catch(Exception $e) {
       dump($e);
@@ -208,7 +207,8 @@ EOT;
       $this->dbh->rollback();
       throw new \Exception();
     }
+    $newId = $this->dbh->lastInsertId();
     $this->dbh->commit();
-    return true;
+    return $newId;
   }
 }

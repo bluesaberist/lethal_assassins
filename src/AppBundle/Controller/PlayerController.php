@@ -23,7 +23,7 @@ class PlayerController extends Controller
     foreach ($players as &$player) {
       $player["rankName"] = RankUtils::rankToText($player["rank"]);
     }
-    $inactivePlayers = [];
+    $inactivePlayers = $this->get("model.player")->getInactivePlayers();
     return $this->render('player/show-players.html.twig', [
       "players" => $players,
       "inactivePlayers" => $inactivePlayers,
@@ -88,6 +88,60 @@ class PlayerController extends Controller
 
     return $this->render('player/edit-player.html.twig', [
       "player" => $player,
+      "ranks" => RankUtils::RANKS,
+    ]);
+  }
+
+  /**
+   * @Route("/admin/add-player", name="admin-add-player")
+   */
+  public function addPlayerAction(Request $request)
+  {
+    if($request->getMethod() === "POST" && $request->request->get("name")) {
+      $name = $request->request->get("name");
+
+      if(
+        $name &&
+        $id = $this->get("model.player")
+          ->insertPlayer(
+            $name,
+            13,
+            $request->request->get("joindate"),
+            $active = 1,
+            $request->request->get("discordId"),
+            $request->request->get("email")
+          )
+      ) {
+        $this->addFlash(
+          'success',
+          'Added player.'
+        );
+        return $this->redirectToRoute('admin-show-player', ["id" => $id], 302);
+      }
+      else {
+        $this->addFlash(
+          'error',
+          'FAILED TO ADD PLAYER!'
+        );
+        return $this->render('player/add-player.html.twig', [
+          "player" => [
+            "name" => $name,
+            "joindate" => $request->request->get("joindate"),
+            "discordId" => $request->request->get("discordId"),
+            "email" => $request->request->get("email"),
+          ],
+          "ranks" => RankUtils::RANKS,
+        ]);
+      }
+    }
+
+    return $this->render('player/add-player.html.twig', [
+      "player" => [
+        "name" => '',
+        "joindate" => (new \DateTime())->format('Y-m-d'),
+        "discordId" => '',
+        "email" => '',
+      ],
       "ranks" => RankUtils::RANKS,
     ]);
   }
