@@ -62,8 +62,9 @@ SELECT
   `EslGame`.`pageLink`,
   COUNT(`player`.`id`) AS 'playerCount'
 FROM `EslGame`
-JOIN `EslGamePlayers` ON `EslGame`.`id` = `EslGamePlayers`.`EslGameId`
-JOIN `player` ON `EslGamePlayers`.`playerId` = `player`.`id`
+LEFT JOIN `EslGamePlayers` ON `EslGame`.`id` = `EslGamePlayers`.`EslGameId`
+LEFT JOIN `player` ON `EslGamePlayers`.`playerId` = `player`.`id`
+WHERE `EslGame`.`id` = :id
 GROUP BY `EslGame`.`id`
 EOT;
     try {
