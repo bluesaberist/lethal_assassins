@@ -14,7 +14,7 @@
 {% endblock %}
 {% block body %}
 <div class="games-list admin-panel">
-
+  {% include 'admin/navigation.html.twig' %}
   <h1><a href="{{path('esl-roster')}}">ESL Games</a> / {{game.date}}</h1>
   <ul>
     <li>Type: <b>{{game.type}}</b></li>

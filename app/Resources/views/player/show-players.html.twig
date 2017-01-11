@@ -36,6 +36,7 @@
 {% endblock %}
 {% block body %}
 <div class="admin-panel">
+  {% include 'admin/navigation.html.twig' %}
   <h1>Active Players</h1>
   <div>
     <a href="{{path('admin-add-player')}}" class="pure-button pure-button-primary">Add Player</a>

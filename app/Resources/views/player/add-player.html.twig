@@ -24,6 +24,7 @@
 {% endblock %}
 {% block body %}
 <div class="admin-panel">
+  {% include 'admin/navigation.html.twig' %}
   <h1><a href="{{path('admin-show-players')}}">Player List</a> / New Player</h1>
   <form method="POST" action="{{path('admin-add-player')}}">
     <ul class="player-info">

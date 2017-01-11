@@ -21,6 +21,7 @@
 {% endblock %}
 {% block body %}
 <div class="admin-panel">
+  {% include 'admin/navigation.html.twig' %}
   <h1><a href="{{path('admin-show-players')}}">Player List</a> / {{player.name}}</h1>
   <ul class="player-info">
     <li><span class="field-label">Rank:</span>       <span class="field-value">{{player.rank}}</span></li>

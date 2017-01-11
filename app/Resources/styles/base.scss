@@ -34,6 +34,30 @@ h1 {
 .admin-panel {
   margin: auto;
   background-color: rgba(255, 255, 255, .8);
-  padding: 1rem;
+  padding: 0 1rem 1rem;
   max-width: 50rem;
+}
+
+.admin-navigation {
+  margin: 0 -1rem;
+  background-color: rgba(0, 0, 0, .8);
+  color: white;
+  font-family: sans-serif;
+
+  a {
+    display: inline-block;
+    padding: .5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+
+    &:link,
+    &:visited {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, .5);
+    }
+  }
 }
