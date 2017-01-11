@@ -16,16 +16,16 @@ class IndexController extends Controller
 
     $dbh = $this->getDoctrine()->getManager()->getConnection();
 
-    $memberQuery = "SELECT `id`, `rank`, `name`, `joindate`, `discordid` FROM player WHERE rank = 1 ORDER BY `joindate`";
+    $memberQuery = "SELECT `id`, `rank`, `name`, `joindate`, `discordId` FROM player WHERE rank = 1 ORDER BY `joindate`";
     $clanMaster = $dbh->query($memberQuery);
 
-    $memberQuery = "SELECT `id`, `rank`, `name`, `joindate`, `discordid` FROM player WHERE rank = 2 OR rank = 3 ORDER BY rank ASC, `joindate`";
+    $memberQuery = "SELECT `id`, `rank`, `name`, `joindate`, `discordId` FROM player WHERE rank = 2 OR rank = 3 ORDER BY rank ASC, `joindate`";
     $officer = $dbh->query($memberQuery);
 
-    $memberQuery = "SELECT `id`, `rank`, `name`, `joindate`, `discordid` FROM player WHERE rank = 4 ORDER BY `joindate`";
+    $memberQuery = "SELECT `id`, `rank`, `name`, `joindate`, `discordId` FROM player WHERE rank = 4 ORDER BY `joindate`";
     $fighter = $dbh->query($memberQuery);
 
-    $memberQuery = "SELECT `id`, `rank`, `name`, `joindate`, `discordid` FROM player WHERE rank = 13 ORDER BY `joindate`";
+    $memberQuery = "SELECT `id`, `rank`, `name`, `joindate`, `discordId` FROM player WHERE rank = 13 ORDER BY `joindate`";
     $recruit = $dbh->query($memberQuery);
 
     $screenshots = [
