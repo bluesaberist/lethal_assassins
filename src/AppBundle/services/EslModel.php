@@ -4,16 +4,25 @@ namespace AppBundle\services;
 
 use Doctrine\DBAL\Connection;
 
+use Psr\Log\LoggerInterface;
+
 /**
  *
  */
 class EslModel
 {
   protected $dbh;
+  protected $logger;
 
-  public function __construct(Connection $dbh)
+  public function __construct(Connection $dbh, LoggerInterface $logger)
   {
     $this->dbh = $dbh;
+    $this->logger = $logger;
+  }
+
+  protected function error($message)
+  {
+    $this->logger->error("EslModel Error: ".$message);
   }
 
   public function getGames($limit = 10)
@@ -37,7 +46,7 @@ EOT;
       return $this->dbh->query($listGamesQuery);
     }
     catch (\Exception $e) {
-      dump($e);
+      $this->error($e->getMessage());
       return null;
     }
 
@@ -61,7 +70,7 @@ EOT;
       return $this->dbh->executeQuery($gameQuery, ["id" => $gameId])->fetchAll(\PDO::FETCH_ASSOC);
     }
     catch (Exception $e) {
-      dump($e);
+      $this->error($e->getMessage());
       return null;
     }
   }
@@ -82,7 +91,7 @@ EOT;
       return true;
     }
     catch(\Exception $e) {
-      dump($e);
+      $this->error($e->getMessage());
       return false;
     }
   }

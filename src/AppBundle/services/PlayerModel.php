@@ -3,6 +3,7 @@
 namespace AppBundle\services;
 
 use Doctrine\DBAL\Connection;
+use Psr\Log\LoggerInterface;
 
 /**
  *
@@ -10,10 +11,17 @@ use Doctrine\DBAL\Connection;
 class PlayerModel
 {
   protected $dbh;
+  protected $logger;
 
-  public function __construct(Connection $dbh)
+  public function __construct(Connection $dbh, LoggerInterface $logger)
   {
     $this->dbh = $dbh;
+    $this->logger = $logger;
+  }
+
+  protected function error($message)
+  {
+    $this->logger->error("EslModel Error: ".$message);
   }
 
   public function getPlayer($id)
@@ -31,7 +39,7 @@ EOT;
       return false;
     }
     catch (\Exception $e) {
-      dump($e);
+      $this->error($e->getMessage());
       return null;
     }
   }
@@ -49,7 +57,7 @@ EOT;
       return $players;
     }
     catch (\Exception $e) {
-      dump($e);
+      $this->error($e->getMessage());
       return null;
     }
   }
@@ -67,7 +75,7 @@ EOT;
       return $players;
     }
     catch (\Exception $e) {
-      dump($e);
+      $this->error($e->getMessage());
       return null;
     }
   }
@@ -92,7 +100,7 @@ EOT;
       return $players;
     }
     catch (\Exception $e) {
-      dump($e);
+      $this->error($e->getMessage());
       return null;
     }
   }
@@ -120,7 +128,7 @@ EOT;
       return $this->dbh->executeQuery($selectQuery, ["eslGameId" => $gameId])->fetchAll(\PDO::FETCH_ASSOC);
     }
     catch (\Exception $e) {
-      dump($e);
+      $this->error($e->getMessage());
       return null;
     }
   }
@@ -144,8 +152,8 @@ EOT;
       ]);
       return $id;
     }
-    catch(Exception $e) {
-      dump($e);
+    catch(\Exception $e) {
+      $this->error($e->getMessage());
       return false;
     }
   }
@@ -153,7 +161,7 @@ EOT;
   public function editPlayer($id, $fields)
   {
     if(!is_numeric($id)) {
-      dump("Editing player, bad ID given (non-numeric)");
+      $this->error("Editing player, bad ID given (non-numeric)");
       return false;
     }
     $availableFields = ["name", "rank", "joindate", "discordId", "active", "email", "password"];
@@ -183,7 +191,7 @@ EOT;
       }
     }
     if(count($queryFieldItems) < 1) {
-      dump("Editing player $id, no new fields found.");
+      $this->error("Editing player $id, no new fields found.");
       return false;
     }
 
@@ -193,8 +201,8 @@ EOT;
       $this->insertRow($editQuery, $parameters);
       return true;
     }
-    catch(Exception $e) {
-      dump($e);
+    catch(\Exception $e) {
+      $this->error($e->getMessage());
       return false;
     }
   }
